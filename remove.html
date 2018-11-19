@@ -1,0 +1,329 @@
+<html>
+<head>
+	<title>Remove PTU local setting</title>
+</head>
+<style type="text/css" rel="https://robertsspaceindustries.com/cache/en/rsi-css.css?v=1.9.6.0"></style>
+<style type="text/css" rel="https://fonts.googleapis.com/css?family=Electrolize|Orbitron:400,500,700|Share+Tech+Mono"></style>
+<style type="text/css">
+	h1, h2, h3, h4, h5, h6 {
+	    font-family: 'Electrolize',Arial,Helvetica,sans-serif;
+	    color: white;
+	    font-weight: normal;
+	}
+	body {
+	    position: relative;
+	    background: url(https://robertsspaceindustries.com/rsi/static/images/common/fading-bars.png) repeat;
+	    min-height: 175px;
+	    /*padding: 20px;*/
+	    background: black;
+	    font-size: 1em;
+    	line-height: 1.4;
+	}
+	.content-wrapper {
+    background: black;
+    background: url(https://robertsspaceindustries.com/rsi/static/images/common/fading-bars-top.png) repeat-x top left, url(https://robertsspaceindustries.com/rsi/static/images/common/fading-bars-bottom.png) repeat-x bottom left, rgba(0, 0, 0, 0.4);
+}
+.content-block1 {
+    border: 1px solid #0d1f2c;
+    padding: 22px;
+    border-top-color: #286e80;
+    position: relative;
+    padding: 10px 12px 68px;
+}
+span, div {
+    font-size: 12px;
+    /*font-family: 'Electrolize';*/
+    color: #587e91;
+    text-transform: uppercase;
+    line-height: 38px;
+/*    display: block;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+}
+* {
+    font-family: Tahoma,Arial,Helvetica,sans-serif;
+    text-size-adjust: 100%;
+}
+
+#settings .block-head h3:before {
+    width: 130px;
+    height: 2px;
+    left: 0;
+    background-color: #4ee0ff;
+}
+#settings .block-head h3:before, #settings .block-head h3:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -3px;
+}
+#settings .block-head h3:after {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    left: 130px;
+    border-color: #4ee0ff transparent transparent transparent;
+}
+#settings .block-head h3:before, #settings .block-head h3:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -3px;
+}
+#settings .block-head h3 {
+    font-size: 15px;
+    border-bottom: 1px solid #4ee0ff;
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    color: #4ee0ff;
+    position: relative;
+}
+
+h1.page-title {
+    font-size: 24px;
+    color: #00e7ff;
+    font-weight: normal;
+    /*font-family: 'Electrolize';*/
+    text-transform: uppercase;
+    height: 56px;
+    line-height: 60px;
+    padding-left: 63px;
+    border-top: 1px solid #00e7ff;
+    border-bottom: 1px solid #1681a5;
+    position: relative;
+    text-shadow: 0 0 20px #09F;
+    background: url(https://robertsspaceindustries.com/rsi/static/images/page_title_lines.png);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+h1.page-title .icon {
+    display: block;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    background: url(https://robertsspaceindustries.com/rsi/static/images/modal_title_icon.png);
+}
+
+a.sidenav .line, label.sidenav .line {
+    display: block;
+    width: 6px;
+    height: 38px;
+    background: rgba(41,81,99,0.5);
+    float: left;
+    margin-right: 7px;
+    border-radius: 10px 0 0 10px;
+}
+
+.active  .sidenav span.bg:hover {
+    color: #fff;
+}
+
+.trans-02s {
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    -o-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+.trans-background {
+    -webkit-transition-property: background;
+    -moz-transition-property: background;
+    -o-transition-property: background;
+    transition-property: background;
+}
+.active .sidenav .bg {
+    width: 100%;
+    display: block
+    float: none;
+    border-left: 12px solid transparent;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    border-radius: 0 3px 3px 0;
+}
+.active  .sidenav .bg {
+    padding:0 20px 0 10px;
+}
+
+.active  .sidenav .bg {
+	display: block;
+    border-right: 6px solid #587e91;
+    background-image: rgba(48,145,250,0.15);
+    background-image: -webkit-linear-gradient(left, rgba(48,145,250,0.15) 5%, rgba(17,53,89,0.15) 100%);
+    background-image: -moz-linear-gradient(left, rgba(48,145,250,0.15) 5%, rgba(17,53,89,0.15) 75%);
+    background-image: -ms-linear-gradient(left, rgba(48,145,250,0.15) 5%, rgba(17,53,89,0.15) 100%);
+    background-image: linear-gradient(left, rgba(48,145,250,0.15) 5%, rgba(17,53,89,0.15) 100%);
+    width: 100%;
+    padding-left:10px;
+}
+
+.active  .sidenav .bg:hover {
+	display: block;
+    border-right: 6px solid #00b2c4;
+    background-image: rgba(48,145,250,0.15);
+    background-image: -webkit-linear-gradient(left, rgba(48,145,250,0.45) 5%, rgba(17,53,89,0.45) 100%);
+    background-image: -moz-linear-gradient(left, rgba(48,145,250,0.15) 5%, rgba(17,53,89,0.15) 75%);
+    background-image: -ms-linear-gradient(left, rgba(48,145,250,0.15) 5%, rgba(17,53,89,0.15) 100%);
+    background-image: linear-gradient(left, rgba(48,145,250,0.15) 5%, rgba(17,53,89,0.15) 100%);
+    width: 100%;
+    padding-left:10px;
+
+}
+
+.active{
+	float: left;
+	margin-right: 20px;
+}
+* {
+    font-family: Tahoma,Arial,Helvetica,sans-serif;
+}
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+.reset {
+	clear:both;
+}
+</style>
+<body>
+<h1 class="page-title ">
+  <span class="top-line"></span>
+  <span class="inner-line"></span>
+  <span class="icon"></span>REMOVE PTU LOCAL SETTINGS
+  <span class="bottom-line"></span>
+</h1>
+
+<div id="settings" class="content-wrapper content-block1 overview">
+<div class="block-head"> <h3>Current folder</h3>  </div>
+	<span id="info" style="color: #00aeff;"></span><span >&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span><span id="status" style="color:lightgreen"></span><br>
+	<!-- <input id="file2" type="file" webkitdirectory /> -->
+	<!-- <button id='rembutton' onclick="onRemove()">Remove Folder</button> -->
+	<div class="active">
+		<a href="#" id="rembutton" class="sidenav trans-02s trans-color" onclick="onRemove()">
+	      <span class="line trans-02s trans-background"></span>
+	      <span class="bg">Remove Folder</span>
+	    </a>
+	</div>
+	<div class="active">
+		<a href="#" id="openbutton" class="sidenav trans-02s trans-color" onclick="onOpen()">
+	      <span class="line trans-02s trans-background"></span>
+	      <span class="bg">Open Folder</span>
+	    </a>
+	</div>
+	<!-- <button id='openbutton' onclick="onOpen()">Open Folder</button> -->
+	<!-- <div class="block-head reset"> <h3>Current folder</h3>  </div> -->
+	<div class="active">
+		<label for="file1" href="#" id="openbutton" class="sidenav trans-02s trans-color">
+	      <span class="line trans-02s trans-background"></span>
+	      <span class="bg">Change Folder</span>
+	    </label>
+	</div>
+	<input id="file1" type="file" nwdirectory onchange="onChange(this)" onclick="this.value=null;" style="display:none"/>
+
+
+</div>
+
+
+<script type="text/javascript">
+//C:\Program Files\Roberts Space Industries\StarCitizenPTU\LIVE\USER
+var installPath = localStorage.love || process.env.ProgramFiles+'\\Roberts Space Industries\\StarCitizenPTU\\LIVE\\USER'
+
+var d = document;
+d.getElementById('info').innerText =  installPath
+d.getElementById('file1').setAttribute('nwdirectory', installPath)
+// document.getElementById('file2').setAttribute('nwdirectory', process.env.ProgramFiles+'\\Roberts Space Industries\\StarCitizenPTU\\LIVE\\USER')
+
+
+var fs = require('fs'); 
+
+function checkStatus(){
+	if (!fs.existsSync(installPath)) {
+		d.getElementById('status').innerText = 'Not exist'
+		d.getElementById('rembutton').style.display="none";// setAttribute('onclick','')
+		d.getElementById('openbutton').style.display="none";//setAttribute('onclick','')
+		d.getElementById('file1').setAttribute('nwdirectory', process.env.ProgramFiles)
+	}else{
+		d.getElementById('status').innerText = 'Exist'
+		d.getElementById('rembutton').style.display="block";//.setAttribute('onclick','onRemove()')
+		d.getElementById('openbutton').style.display="block";//.setAttribute('onclick','onOpen()')
+
+	}
+}
+
+function onChange(that) {
+	d.getElementById('info').innerText = installPath = localStorage.love = that.value
+	checkStatus();
+	_auto.notify('PTU Folder', 'Target folder changed to: \r\n'+that.value )
+}
+
+var deleteFolderRecursive = function(path) {
+		  if (fs.existsSync(path)) {
+		    fs.readdirSync(path).forEach(function(file, index){
+		      var curPath = path + "/" + file;
+		      if (fs.lstatSync(curPath).isDirectory()) { // recurse
+		        deleteFolderRecursive(curPath);
+		      } else { // delete file
+		        fs.unlinkSync(curPath);
+		      }
+		    });
+		    fs.rmdirSync(path);
+		  }
+		};
+
+function onOpen(){
+	nw.Shell.showItemInFolder(installPath)
+	return false;
+}
+
+function onRemove(){
+	if (confirm('Are you sure to remove: '+ installPath)){
+
+		deleteFolderRecursive(installPath)
+
+		checkStatus()
+
+		if (fs.existsSync(installPath)) {
+			alert('Cannot remove folder:' + installPath)
+			d.getElementById('status').innerText += 'Remove failed'
+		}else{
+			d.getElementById('status').innerText = 'Remove Succeed'
+		}
+	}
+	
+}
+
+function setStyle(elm, style){
+	for (var prop in style) {
+	  if (style.hasOwnProperty(prop) && isNaN(prop)) { 
+	  // or if (Object.prototype.hasOwnProperty.call(obj,prop)) for safety...
+	    //console.log("prop: " + prop + " value: " + style[prop])
+	    elm.style[prop] = style[prop]
+	  }
+}
+}
+
+
+// or 
+
+// if (path.existsSync('foo.txt')) { 
+//   // do something 
+// } 
+
+checkStatus();
+
+</script>
+
+</body>
+</html>

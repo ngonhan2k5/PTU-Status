@@ -1,0 +1,47 @@
+{
+  "name": "PTUChecker",
+  "main": "index3.html",
+  "version": "0.00.091",
+  "description": "StarCitizen PTU available status checker",
+  "author": "ngonhan2k5",
+  "dependencies": {
+    "node-notifier": "^5.3.0",
+    "path": "^0.12.7"
+  },
+  "inject_js_end": "inject.js",
+  "node-remote": "https://robertsspaceindustries.com",
+  "devDependencies": {
+    "nwjs-builder-phoenix": "^1.14.8"
+  },
+  "single-instance": true,
+  "build": {
+    "appId": "io.github.evshiron.nwjs-builder-phoenix.project",
+    "nwVersion": "0.34.3",
+    "packed": true,
+    "targets": [
+      "nsis7z"
+    ],
+    "win": {
+      "productName": "StarCitizen PTU Status",
+      "companyName": "b-reserved",
+      "copyright": "Free to use",
+      "icon": "icon.ico"
+    }
+  },
+  "scripts": {
+    "dist": "build --tasks win-x64 --mirror https://dl.nwjs.io/ .",
+    "start": "run --x86 --mirror https://dl.nwjs.io/ ."
+  },
+  "window": {
+    "width": 500,
+    "height": 500,
+    "icon": "icon.ico"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/ngonhan2k5/PTU-Status.git",
+      "path": "packages/mypackage"
+    }
+  ]
+}
