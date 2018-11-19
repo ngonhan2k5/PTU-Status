@@ -207,7 +207,7 @@ a {
 
 <div id="settings" class="content-wrapper content-block1 overview">
 <div class="block-head"> <h3>Current folder</h3>  </div>
-	<span id="info" style="color: #00aeff;"></span><span >&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span><span id="status" style="color:Lime"></span><br>
+	<span id="info" style="color: #00aeff;text-transform:none"></span><span >&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span><span id="status" style="color:Lime"></span><br>
 	<!-- <input id="file2" type="file" webkitdirectory /> -->
 	<!-- <button id='rembutton' onclick="onRemove()">Remove Folder</button> -->
 	<div class="active">
@@ -237,130 +237,126 @@ a {
 
 
 <script type="text/javascript">
-//C:\Program Files\Roberts Space Industries\StarCitizenPTU\LIVE\USER
-var installPath = localStorage.love || process.env.ProgramFiles+'\\Roberts Space Industries\\StarCitizenPTU\\LIVE\\USER'
+    var fs = require('fs'); 
+    var d = document;
+    function checkStatus(){
+        if (!fs.existsSync(installPath)) {
+            d.getElementById('status').innerText = 'Not exist'
+            d.getElementById('rembutton').style.display="none";// setAttribute('onclick','')
+            d.getElementById('openbutton').style.display="none";//setAttribute('onclick','')
+            d.getElementById('file1').setAttribute('nwdirectory', process.env.ProgramFiles)
+        }else{
+            d.getElementById('status').innerText = 'Exist'
+            d.getElementById('rembutton').style.display="block";//.setAttribute('onclick','onRemove()')
+            d.getElementById('openbutton').style.display="block";//.setAttribute('onclick','onOpen()')
 
-var d = document;
-d.getElementById('info').innerText =  installPath
-d.getElementById('file1').setAttribute('nwdirectory', installPath)
-// document.getElementById('file2').setAttribute('nwdirectory', process.env.ProgramFiles+'\\Roberts Space Industries\\StarCitizenPTU\\LIVE\\USER')
+        }
+    }
+
+    function onChange(that) {
+        d.getElementById('info').innerText = installPath = localStorage.love = that.value
+        checkStatus();
+        _auto.notify('PTU Folder', 'Target folder changed to: \r\n'+that.value )
+    }
+
+    var deleteFolderRecursive = function(path) {
+              if (fs.existsSync(path)) {
+                fs.readdirSync(path).forEach(function(file, index){
+                  var curPath = path + "/" + file;
+                  if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                    deleteFolderRecursive(curPath);
+                  } else { // delete file
+                    fs.unlinkSync(curPath);
+                  }
+                });
+                fs.rmdirSync(path);
+              }
+            };
+
+    function onOpen(){
+        nw.Shell.showItemInFolder(installPath)
+        return false;
+    }
+
+    function onRemove(){
+        if (confirm('Are you sure to remove: '+ installPath)){
+
+            deleteFolderRecursive(installPath)
+
+            checkStatus()
+
+            if (fs.existsSync(installPath)) {
+                alert('Cannot remove folder:' + installPath)
+                d.getElementById('status').innerText += 'Remove failed'
+            }else{
+                d.getElementById('status').innerText = 'Remove Succeed'
+            }
+        }
+        
+    }
+
+    function onDetectPath(){
+        var query = path.join(process.env.WINDIR, 'system32', 'reg.exe');
+
+    // Target key.
+    query += ' add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run';
+
+    // Value name.
+    query += ' /v MyApp';
+
+    // Value type. Our value is a null-terminated string.
+    query += ' /t REG_SZ';
+
+    // Our path. Might want to fetch NW-specific command-line arguments from
+    // App.fullArgv as well.
+    query += ' /d ' + process.execPath;
+
+    // Force write.
+    // query += ' /f';
+
+    }
+
+    // var spawn = require('child_process').spawn,
+    //     ls = spawn('reg.exe', ['query','HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall','/f','Mozilla','/s']);
+    //     //ls    = spawn('reg.exe', ['query','HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall','/f','RSI PTU Launcher','/s']);
+
+    // ls.stdout.on('data', function (data) {
+    //   console.log('stdout: ' + data.toString());
+    //   if (data.toString() == '')
+    // });
+
+    // ls.stderr.on('data', function (data) {
+    //   console.log('stderr: ' + data.toString());
+    // });
+
+    // ls.on('exit', function (code) {
+    //   console.log('child process exited with code ' + code.toString());
+    // });
+
+    // }
+    // RSI PTU Launcher vs RSI Launcher
+
+    function setStyle(elm, style){
+        for (var prop in style) {
+          if (style.hasOwnProperty(prop) && isNaN(prop)) { 
+          // or if (Object.prototype.hasOwnProperty.call(obj,prop)) for safety...
+            //console.log("prop: " + prop + " value: " + style[prop])
+            elm.style[prop] = style[prop]
+          }
+        }
+    }
+    
+document.addEventListener("DOMContentLoaded", function(event) { 
+    //C:\Program Files\Roberts Space Industries\StarCitizenPTU\LIVE\USER
+    installPath = localStorage.love || _auto.getRSIPath(true, true)+ '\\LIVE\\USER' || process.env.ProgramFiles+'\\Roberts Space Industries\\StarCitizenPTU\\LIVE\\USER'
 
 
-var fs = require('fs'); 
+    d.getElementById('info').innerText =  installPath
+    d.getElementById('file1').setAttribute('nwdirectory', installPath)
+    // document.getElementById('file2').setAttribute('nwdirectory', process.env.ProgramFiles+'\\Roberts Space Industries\\StarCitizenPTU\\LIVE\\USER')
 
-function checkStatus(){
-	if (!fs.existsSync(installPath)) {
-		d.getElementById('status').innerText = 'Not exist'
-		d.getElementById('rembutton').style.display="none";// setAttribute('onclick','')
-		d.getElementById('openbutton').style.display="none";//setAttribute('onclick','')
-		d.getElementById('file1').setAttribute('nwdirectory', process.env.ProgramFiles)
-	}else{
-		d.getElementById('status').innerText = 'Exist'
-		d.getElementById('rembutton').style.display="block";//.setAttribute('onclick','onRemove()')
-		d.getElementById('openbutton').style.display="block";//.setAttribute('onclick','onOpen()')
-
-	}
-}
-
-function onChange(that) {
-	d.getElementById('info').innerText = installPath = localStorage.love = that.value
-	checkStatus();
-	_auto.notify('PTU Folder', 'Target folder changed to: \r\n'+that.value )
-}
-
-var deleteFolderRecursive = function(path) {
-		  if (fs.existsSync(path)) {
-		    fs.readdirSync(path).forEach(function(file, index){
-		      var curPath = path + "/" + file;
-		      if (fs.lstatSync(curPath).isDirectory()) { // recurse
-		        deleteFolderRecursive(curPath);
-		      } else { // delete file
-		        fs.unlinkSync(curPath);
-		      }
-		    });
-		    fs.rmdirSync(path);
-		  }
-		};
-
-function onOpen(){
-	nw.Shell.showItemInFolder(installPath)
-	return false;
-}
-
-function onRemove(){
-	if (confirm('Are you sure to remove: '+ installPath)){
-
-		deleteFolderRecursive(installPath)
-
-		checkStatus()
-
-		if (fs.existsSync(installPath)) {
-			alert('Cannot remove folder:' + installPath)
-			d.getElementById('status').innerText += 'Remove failed'
-		}else{
-			d.getElementById('status').innerText = 'Remove Succeed'
-		}
-	}
-	
-}
-
-function onDetectPath(){
-	var query = path.join(process.env.WINDIR, 'system32', 'reg.exe');
-
-// Target key.
-query += ' add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run';
-
-// Value name.
-query += ' /v MyApp';
-
-// Value type. Our value is a null-terminated string.
-query += ' /t REG_SZ';
-
-// Our path. Might want to fetch NW-specific command-line arguments from
-// App.fullArgv as well.
-query += ' /d ' + process.execPath;
-
-// Force write.
-// query += ' /f';
-
-
-
-var spawn = require('child_process').spawn,
-    ls    = spawn('ls', ['-lh', '/usr']);
-
-ls.stdout.on('data', function (data) {
-  console.log('stdout: ' + data.toString());
+    checkStatus();
 });
-
-ls.stderr.on('data', function (data) {
-  console.log('stderr: ' + data.toString());
-});
-
-ls.on('exit', function (code) {
-  console.log('child process exited with code ' + code.toString());
-});
-
-}
-
-function setStyle(elm, style){
-	for (var prop in style) {
-	  if (style.hasOwnProperty(prop) && isNaN(prop)) { 
-	  // or if (Object.prototype.hasOwnProperty.call(obj,prop)) for safety...
-	    //console.log("prop: " + prop + " value: " + style[prop])
-	    elm.style[prop] = style[prop]
-	  }
-}
-}
-
-
-// or 
-
-// if (path.existsSync('foo.txt')) { 
-//   // do something 
-// } 
-
-checkStatus();
-
 </script>
 
 </body>

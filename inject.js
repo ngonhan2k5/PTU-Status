@@ -1,24 +1,43 @@
 (function(w){
-	var gui = require('nw.gui')	
+	var gui = require('nw.gui'),
+		fs = require('fs'),
+		spawn = require('child_process').spawn;  
+
 	var menus = [
 		{ label: 'Remove PTU Profile', click: function() {
 
 			    var url = 'chrome-extension://'+chrome.runtime.id+'/remove.html'
 			    var win = gui.Window.open (url, {
 				  position: 'center', 
-				  width: 600,
-				  height: 200,
+				  width: 659,
+				  height: 276,
 				  focus: true,
-				  id: 'aaaa'
+				  id: 'remove',
+				  inject_js_start: 'inject.js'
 				});
 			} 
 		},
-		{ label: 'Lauch PTU Launcher', click: function() {
-			    var spawn = require('child_process').spawn; 
-			    spawn(process.env.ProgramFiles+'\\Roberts Space Industries\\StarCitizenPTU\\LIVE\\Bin64', [], {detached: true});
+		{ label: 'PTU Launcher', click: function() {
+				var l = Auto.getRSIPath(true);
+				if (fs.existsSync(l)) {
+			    	spawn(l, [], {detached: true});
+			    }else{
+			    	Auto.notify('Failed', 'PTU Launcher not found: ' + l)
+			    }
+			} 
+		},
+		{ label: 'LIVE Launcher', click: function() {
+				var l = Auto.getRSIPath(false);
+			    if (fs.existsSync(l)) {
+			    	spawn(l, [], {detached: true});
+			    }else{
+			    	Auto.notify('Failed', 'LIVE Launcher not found at: ' + l)
+			    }
 			} 
 		},
 	]
+			    //C:\Program Files\Roberts Space Industries\RSI Launcher\RSI Launcher.exe
+			    //C:\Program Files\Roberts Space Industries\RSI PTU Launcher\RSI PTU Launcher.exe
 
 	const notifier = require('node-notifier');
 	// const path = require('path');
@@ -185,7 +204,39 @@
 		        tray = null;
 		      });
 		    });
+		},
+		getRSIPath: function (ptu, insDir){
+
+			var search = ptu? 'RSI PTU Launcher': 'RSI Launcher',
+				sc = ptu? 'StarCitizenPTU': 'StarCitizen'
+
+			var insDir = !!insDir || false,
+		        ptuLaunch = ''
+
+		    const path = require('path');
+		    const { execSync } = require('child_process');
+
+		    try{
+		        ptuLaunch = execSync('reg.exe query HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall /f "'+ search +'" /s').toString(); // 
+		    }catch(e){
+		        console.log(e,ptuLaunch)
+		    }
+		    
+		    if (ptuLaunch)
+		        ptuLaunch = ptuLaunch.match(/UninstallString[^\"]*"([^\"]*)/)[1] //C:\Program Files\Roberts Space Industries\RSI PTU Launcher\Uninstall RSI PTU Launcher.exe
+		    
+	    	if (insDir){
+	    		ptuLaunch = ptuLaunch && path.dirname(ptuLaunch)
+	    		return ptuLaunch.replace(search, sc) || process.env.ProgramFiles+'\\Roberts Space Industries\\'+ sc
+	    	}else{
+	        	ptuLaunch = ptuLaunch && ptuLaunch.replace('Uninstall ')
+	        	return ptuLaunch || process.env.ProgramFiles+'\\Roberts Space Industries\\'+ search +'\\'+ search +'.exe';
+	        }
+		    //C:\Program Files\Roberts Space Industries\RSI PTU Launcher\Uninstall RSI PTU Launcher.exe vs RSI PTU Launcher.exe
+		    
+
 		}
+
 	}
 	console.log(parent, window)
 
@@ -215,6 +266,7 @@
 		notify: Auto.notify,
 		createMenu: function(){Auto.addMenu(/remove\.html/)},
 		createTray: Auto.createTray,
+		getRSIPath: Auto.getRSIPath,
 		get1: Auto.getOneDom,
 		getStyle: function (a){
 			JSON.stringify(window.getComputedStyle(a, null))
