@@ -6,7 +6,7 @@ Browsing https://robertsspaceindustries.com and check DOM to check account setti
 
 ## Why Bother?
 
-Wait for your turn - your wave to allow access to PTU every major release is tired
+Get tired of Wait for your turn - your wave to allow access to PTU every major release.
 
 ## Features
 
