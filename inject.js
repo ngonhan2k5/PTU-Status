@@ -229,7 +229,7 @@
 	    		ptuLaunch = ptuLaunch && path.dirname(ptuLaunch)
 	    		return ptuLaunch.replace(search, sc) || process.env.ProgramFiles+'\\Roberts Space Industries\\'+ sc
 	    	}else{
-	        	ptuLaunch = ptuLaunch && ptuLaunch.replace('Uninstall ')
+	        	ptuLaunch = ptuLaunch && ptuLaunch.replace('Uninstall ', '')
 	        	return ptuLaunch || process.env.ProgramFiles+'\\Roberts Space Industries\\'+ search +'\\'+ search +'.exe';
 	        }
 		    //C:\Program Files\Roberts Space Industries\RSI PTU Launcher\Uninstall RSI PTU Launcher.exe vs RSI PTU Launcher.exe

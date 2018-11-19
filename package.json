@@ -18,10 +18,11 @@
     "appId": "io.github.evshiron.nwjs-builder-phoenix.project",
     "nwVersion": "0.34.3",
     "packed": true,
+    "nwFlavor":"sdk",
     "targets": [
       "nsis7z"
     ],
-    "win": {
+    "win": {  
       "productName": "StarCitizen PTU Status",
       "companyName": "b-reserved",
       "copyright": "Free to use",
