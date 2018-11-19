@@ -207,7 +207,7 @@ a {
 
 <div id="settings" class="content-wrapper content-block1 overview">
 <div class="block-head"> <h3>Current folder</h3>  </div>
-	<span id="info" style="color: #00aeff;"></span><span >&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span><span id="status" style="color:lightgreen"></span><br>
+	<span id="info" style="color: #00aeff;"></span><span >&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span><span id="status" style="color:Lime"></span><br>
 	<!-- <input id="file2" type="file" webkitdirectory /> -->
 	<!-- <button id='rembutton' onclick="onRemove()">Remove Folder</button> -->
 	<div class="active">
@@ -302,6 +302,44 @@ function onRemove(){
 		}
 	}
 	
+}
+
+function onDetectPath(){
+	var query = path.join(process.env.WINDIR, 'system32', 'reg.exe');
+
+// Target key.
+query += ' add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run';
+
+// Value name.
+query += ' /v MyApp';
+
+// Value type. Our value is a null-terminated string.
+query += ' /t REG_SZ';
+
+// Our path. Might want to fetch NW-specific command-line arguments from
+// App.fullArgv as well.
+query += ' /d ' + process.execPath;
+
+// Force write.
+// query += ' /f';
+
+
+
+var spawn = require('child_process').spawn,
+    ls    = spawn('ls', ['-lh', '/usr']);
+
+ls.stdout.on('data', function (data) {
+  console.log('stdout: ' + data.toString());
+});
+
+ls.stderr.on('data', function (data) {
+  console.log('stderr: ' + data.toString());
+});
+
+ls.on('exit', function (code) {
+  console.log('child process exited with code ' + code.toString());
+});
+
 }
 
 function setStyle(elm, style){
