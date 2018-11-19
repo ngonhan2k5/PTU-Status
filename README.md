@@ -1,4 +1,4 @@
-# PTU-Status
+# StarCitizen Game PTU-Status
 
 A window tool help auto check PTU status and notify
 Created and warpped by nwjs https://nwjs.io/ and nwjs-builder-phoenix https://github.com/evshiron/nwjs-builder-phoenix
