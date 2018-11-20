@@ -1,6 +1,6 @@
 {
   "name": "PTUChecker",
-  "main": "index3.html",
+  "main": "main.html",
   "version": "0.00.091",
   "description": "StarCitizen PTU available status checker",
   "author": "ngonhan2k5",
