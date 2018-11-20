@@ -151,7 +151,7 @@ a.sidenav .line, label.sidenav .line {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -ms-box-sizing: border-box;
-    border-radius: 0 3px 3px 0;
+    border-radius: 4px;
 }
 .active  .sidenav .bg {
     padding:0 20px 0 10px;
@@ -185,6 +185,7 @@ a.sidenav .line, label.sidenav .line {
 .active{
     float: left;
     margin-right: 20px;
+    cursor: pointer;
 }
 * {
     font-family: Tahoma,Arial,Helvetica,sans-serif;
@@ -200,6 +201,11 @@ a {
 .reset {
     clear:both;
 }
+
+li {
+    font-size: 0.95em;
+    /*text-align: justify;*/
+}
 </style>
 
 <script type="text/javascript">
@@ -209,12 +215,10 @@ function onTrust(){
 }
 
 function onLoad(){
-    document.getElementById('rembutton').style.display = "none";
-    document.getElementById('openbutton').style.display = "none";
-
+    console.log(localStorage.trusted)
     if (localStorage.trusted){
         setTimeout(function(){
-            location = 'https://robertsspaceindustries.com'    
+            // location = 'https://robertsspaceindustries.com'    
         }, 1000)
     }else{
         document.getElementById('rembutton').style.display = "block";
@@ -228,32 +232,34 @@ function onLoad(){
   <h1 class="page-title ">
   <span class="top-line"></span>
   <span class="inner-line"></span>
-  <span class="icon"></span>HELLO STARCITZEN BROZ.
+  <span class="icon"></span>HI STARCITIZEN BROZ.
   <span class="bottom-line"></span>
 </h1>
 
 <div id="settings" class="content-wrapper content-block1 overview">
-<div class="block-head"> <h3>This tool: 
-    <br>- will not connect to any 3rd server beside RSI website.
-    <br>- your setting (mostly path to create shortcut) will be saved in local.
-    <br>- will not do anything without ask for your permission.<br>
+<div class="block-head"> <h3>About this tool
+    <ul>
+        <li>will not connect to any 2nd server beside RSI website </li>
+        <li>your settings (mostly path to create shortcut) will be saved in local</li>
+        <li>will not do anything without ask for your permission</li>
+        <li style="color:yellow">You will required login to RSI website at next screen to allow check PTU status</li>
+    </ul>
     </h3>  </div><br>
-    <span id="info" style="color: #00aeff;">This Application just a wrapped web browser strengthen by chrome app nodejs</span>
-    <br>
-    <span id="status" style="color:yellow">You will required login to RSI website to allow to check PTU status then create notification</span><br>
-    <span style="color: #00aeff;">Source code here: <a style="color: #00aeff;text-decoration: underline;" href="https://github.com/ngonhan2k5/PTU-Status" target="_blank">https://github.com/ngonhan2k5/PTU-Status</a> </span>
+    <span id="info" style="color: #00aeff;">This is a wrapped web browser strengthen by chrome app and nodejs</span>
+    <br>    
+    <span style="color: #00aeff;">Source code at: <a style="color: #00aeff;text-decoration: underline;" href="https://github.com/ngonhan2k5/PTU-Status" target="_blank">https://github.com/ngonhan2k5/PTU-Status</a> </span>
     <br>
     <br>
     <!-- <input id="file2" type="file" webkitdirectory /> -->
     <!-- <button id='rembutton' onclick="onRemove()">Remove Folder</button> -->
     <div class="active">
-        <a href="#" id="rembutton" class="sidenav trans-02s trans-color" onclick="onTrust()">
+        <a href="#" id="rembutton" class="sidenav trans-02s trans-color" onclick="onTrust()" style="display:none">
           <span class="line trans-02s trans-background"></span>
           <span class="bg" style="color:lime">Trust and Continue</span>
         </a>
     </div>
     <div class="active">
-        <a href="#" id="openbutton" class="sidenav trans-02s trans-color" onclick="nw.App.closeAllWindows()">
+        <a href="#" id="openbutton" class="sidenav trans-02s trans-color" onclick="nw.App.quit()" style="display:none">
           <span class="line trans-02s trans-background"></span>
           <span class="bg" style="color:orange">Distrust and Close</span>
         </a>

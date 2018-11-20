@@ -4,6 +4,10 @@
 		spawn = require('child_process').spawn;  
 
 	var menus = [
+		{ label: 'Home', click: function() {
+				location = 'https://robertsspaceindustries.com'
+			} 
+		},
 		{ label: 'Remove PTU Profile', click: function() {
 
 			    var url = 'chrome-extension://'+chrome.runtime.id+'/remove.html'
@@ -169,13 +173,13 @@
 			// debugger
 			if (Auto.getAction().match(exceptAction)) return
 
-			Auto.your_menu = new nw.Menu({ type: 'menubar' })
+			var your_menu = new nw.Menu({ type: 'menubar' })
 			// the menu item appended should have a submenu
 			menus.map(function(item){
-				Auto.your_menu.append( new nw.MenuItem(item)	)
+				your_menu.append( new nw.MenuItem(item)	)
 			})
 			
-			nw.Window.get().menu = Auto.your_menu;
+			nw.Window.get().menu = your_menu;
 		},
 		addTray: function(exceptAction){
 
@@ -195,7 +199,17 @@
 		      // Show tray
 		      tray = new gui.Tray({ title: 'PTU Tools', icon: 'icon.png' });
 
-		      tray.menu = Auto.your_menu;
+		      var your_menu = new nw.Menu({ type: 'menubar' })
+			  // the menu item appended should have a submenu
+			  menus.map(function(item){
+				your_menu.append( new nw.MenuItem(item)	)
+			  })
+			  // Quit menu item
+			  your_menu.append( new nw.MenuItem({ label: 'Exit', click: function() {
+			  	nw.App.quit()
+			  }})	)
+
+		      tray.menu = your_menu;
 
 		      // Show window and remove tray when clicked
 		      tray.on('click', function() {
